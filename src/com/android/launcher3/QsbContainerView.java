@@ -36,6 +36,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.android.launcher3.compat.AppWidgetManagerCompat;
+import com.android.launcher3.config.FeatureFlags;
 
 /**
  * A frame layout which contains a QSB. This internally uses fragment to bind the view, which
@@ -104,6 +105,9 @@ public class QsbContainerView extends FrameLayout {
         }
 
         private View createQsb(LayoutInflater inflater, ViewGroup container) {
+            if (!FeatureFlags.QSB_ON_FIRST_SCREEN) {
+                return new View(getActivity());
+            }
             Launcher launcher = Launcher.getLauncher(getActivity());
             mWidgetInfo = getSearchWidgetProvider(launcher);
             if (mWidgetInfo == null) {
